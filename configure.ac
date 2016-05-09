@@ -1,4 +1,4 @@
-AC_INIT([enigma2],[4.2],[http://gigablue-support.com])
+AC_INIT([enigma2],[3.0.0],[enigma2-devel@lists.elitedvb.net])
 AM_INIT_AUTOMAKE([dist-bzip2 no-define tar-pax -Wno-portability])
 AC_CONFIG_HEADERS([enigma2_config.h])
 
@@ -361,7 +361,6 @@ lib/python/Plugins/SystemPlugins/OSDPositionSetup/Makefile
 lib/python/Plugins/SystemPlugins/OSD3DSetup/Makefile
 lib/python/Plugins/SystemPlugins/HdmiCEC/Makefile
 lib/python/Plugins/SystemPlugins/VideoClippingSetup/Makefile
-lib/python/Plugins/Extensions/GBAspectRatioSwitch/Makefile
 lib/python/Plugins/Extensions/CutListEditor/Makefile
 lib/python/Plugins/Extensions/CutListEditor/meta/Makefile
 lib/python/Plugins/Extensions/DVDBurn/Makefile
@@ -417,7 +416,6 @@ lib/python/Plugins/SystemPlugins/WirelessLan/Makefile
 lib/python/Plugins/SystemPlugins/WirelessLan/meta/Makefile
 lib/python/Plugins/SystemPlugins/DeviceManager/Makefile
 lib/python/Plugins/SystemPlugins/DeviceManager/icons/Makefile
-lib/python/Plugins/SystemPlugins/SwapManager/Makefile
 lib/python/Tools/Makefile
 po/Makefile
 main/Makefile
