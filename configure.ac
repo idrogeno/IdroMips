@@ -111,6 +111,15 @@ AM_CONDITIONAL(GBULTRASE, test "$BOXTYPE" == gbultrase)
 AM_CONDITIONAL(GBX1, test "$BOXTYPE" == gbx1)
 AM_CONDITIONAL(GBX3, test "$BOXTYPE" == gbx3)
 AM_CONDITIONAL(QUADBOX2400, test "$BOXTYPE" == quadbox2400)
+AM_CONDITIONAL(VUUNO, test "$BOXTYPE" == vuuno)
+AM_CONDITIONAL(VUULTIMO, test "$BOXTYPE" == vuultimo)
+AM_CONDITIONAL(VUSOLO, test "$BOXTYPE" == vusolo)
+AM_CONDITIONAL(VUSOLOSE, test "$BOXTYPE" == vusolose)
+AM_CONDITIONAL(VUDUO, test "$BOXTYPE" == vuduo)
+AM_CONDITIONAL(VUSOLO2, test "$BOXTYPE" == vusolo2)
+AM_CONDITIONAL(VUSOLO4K, test "$BOXTYPE" == vusolo4k)
+AM_CONDITIONAL(VUDUO2, test "$BOXTYPE" == vuduo2)
+AM_CONDITIONAL(VUZERO, test "$BOXTYPE" == vuzero)
 
 AC_ARG_WITH(machinebuild,
 	[  --with-machinebuild=NAME machine build [[none,atemeo5200,atemeo6000...]]],
