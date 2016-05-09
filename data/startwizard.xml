@@ -9,7 +9,7 @@ self.selectKey("OK")
 		<step id="introduction" >
 			<text value="Use the up/down keys on your remote control to select an option. After that, press OK." />
 			<list>
-				<listentry caption="Use the wizard to set up basic features" step="network" />
+				<listentry caption="Use the wizard to set up basic features" step="nima" />
 				<listentry caption="Exit the wizard" step="end" />
 			</list>
 			<code>
@@ -82,7 +82,8 @@ self.selectKey("RIGHT")
 		<step id="nimc">
 			<condition>
 from Components.NimManager import nimmanager
-self.condition = len(nimmanager.nim_slots) > 2 and not nimmanager.nim_slots[2].empty and not nimmanager.nim_slots[2].isFBCLink()
+from Screens.Satconfig import isFBCLink
+self.condition = len(nimmanager.nim_slots) > 2 and not nimmanager.nim_slots[2].empty and not isFBCLink(nimmanager.nim_slots[2])
 			</condition>
 			<text value="Please set up tuner C" />
 			<config screen="NimSetup" module="Satconfig" args="2" type="ConfigList" />
@@ -95,7 +96,8 @@ self.selectKey("RIGHT")
 		<step id="nimd">
 			<condition>
 from Components.NimManager import nimmanager
-self.condition = len(nimmanager.nim_slots) > 3 and not nimmanager.nim_slots[3].empty and not nimmanager.nim_slots[3].isFBCLink()
+from Screens.Satconfig import isFBCLink
+self.condition = len(nimmanager.nim_slots) > 3 and not nimmanager.nim_slots[3].empty and not isFBCLink(nimmanager.nim_slots[3])
 			</condition>
 			<text value="Please set up tuner D" />
 			<config screen="NimSetup" module="Satconfig" args="3" type="ConfigList" />
@@ -108,7 +110,8 @@ self.selectKey("RIGHT")
 		<step id="nime">
 			<condition>
 from Components.NimManager import nimmanager
-self.condition = len(nimmanager.nim_slots) > 4 and not nimmanager.nim_slots[4].empty and not nimmanager.nim_slots[4].isFBCLink()
+from Screens.Satconfig import isFBCLink
+self.condition = len(nimmanager.nim_slots) > 4 and not nimmanager.nim_slots[4].empty and not isFBCLink(nimmanager.nim_slots[4])
 			</condition>
 			<text value="Please set up tuner E" />
 			<config screen="NimSetup" module="Satconfig" args="4" type="ConfigList" />
@@ -121,7 +124,8 @@ self.selectKey("RIGHT")
 		<step id="nimf">
 			<condition>
 from Components.NimManager import nimmanager
-self.condition = len(nimmanager.nim_slots) > 5 and not nimmanager.nim_slots[5].empty and not nimmanager.nim_slots[5].isFBCLink()
+from Screens.Satconfig import isFBCLink
+self.condition = len(nimmanager.nim_slots) > 5 and not nimmanager.nim_slots[5].empty and not isFBCLink(nimmanager.nim_slots[5])
 			</condition>
 			<text value="Please set up tuner F" />
 			<config screen="NimSetup" module="Satconfig" args="5" type="ConfigList" />
@@ -134,7 +138,8 @@ self.selectKey("RIGHT")
 		<step id="nimg">
 			<condition>
 from Components.NimManager import nimmanager
-self.condition = len(nimmanager.nim_slots) > 6 and not nimmanager.nim_slots[6].empty and not nimmanager.nim_slots[6].isFBCLink()
+from Screens.Satconfig import isFBCLink
+self.condition = len(nimmanager.nim_slots) > 6 and not nimmanager.nim_slots[6].empty and not isFBCLink(nimmanager.nim_slots[6])
 			</condition>
 			<text value="Please set up tuner G" />
 			<config screen="NimSetup" module="Satconfig" args="6" type="ConfigList" />
@@ -147,7 +152,8 @@ self.selectKey("RIGHT")
 		<step id="nimh">
 			<condition>
 from Components.NimManager import nimmanager
-self.condition = len(nimmanager.nim_slots) > 7 and not nimmanager.nim_slots[7].empty and not nimmanager.nim_slots[7].isFBCLink()
+from Screens.Satconfig import isFBCLink
+self.condition = len(nimmanager.nim_slots) > 7 and not nimmanager.nim_slots[7].empty and not isFBCLink(nimmanager.nim_slots[7])
 			</condition>
 			<text value="Please set up tuner H" />
 			<config screen="NimSetup" module="Satconfig" args="7" type="ConfigList" />
@@ -160,7 +166,8 @@ self.selectKey("RIGHT")
 		<step id="nimi">
 			<condition>
 from Components.NimManager import nimmanager
-self.condition = len(nimmanager.nim_slots) > 8 and not nimmanager.nim_slots[8].empty and not nimmanager.nim_slots[8].isFBCLink()
+from Screens.Satconfig import isFBCLink
+self.condition = len(nimmanager.nim_slots) > 8 and not nimmanager.nim_slots[8].empty and not isFBCLink(nimmanager.nim_slots[8])
 			</condition>
 			<text value="Please set up tuner I" />
 			<config screen="NimSetup" module="Satconfig" args="8" type="ConfigList" />
@@ -173,7 +180,8 @@ self.selectKey("RIGHT")
 		<step id="nimj">
 			<condition>
 from Components.NimManager import nimmanager
-self.condition = len(nimmanager.nim_slots) > 9 and not nimmanager.nim_slots[9].empty and not nimmanager.nim_slots[9].isFBCLink()
+from Screens.Satconfig import isFBCLink
+self.condition = len(nimmanager.nim_slots) > 9 and not nimmanager.nim_slots[9].empty and not isFBCLink(nimmanager.nim_slots[9])
 			</condition>
 			<text value="Please set up tuner J" />
 			<config screen="NimSetup" module="Satconfig" args="9" type="ConfigList" />
@@ -183,20 +191,7 @@ self.selectKey("LEFT")
 self.selectKey("RIGHT")
 			</code>
 		</step>
-		<step id="nimk">
-			<condition>
-from Components.NimManager import nimmanager
-self.condition = len(nimmanager.nim_slots) > 10 and not nimmanager.nim_slots[10].empty and not nimmanager.nim_slots[10].isFBCLink()
-			</condition>
-			<text value="Please set up tuner K" />
-			<config screen="NimSetup" module="Satconfig" args="10" type="ConfigList" />
-			<code>
-self.clearSelectedKeys()
-self.selectKey("LEFT")
-self.selectKey("RIGHT")
-			</code>
-		</step>
-
+<!--
 		<step id="channels">
 			<condition>
 from Components.NimManager import nimmanager
@@ -210,16 +205,13 @@ self.selectKey("LEFT")
 self.selectKey("RIGHT")
 			</code>
 		</step>
-
+ -->
 		<step id="scanquestion">
 			<text value="Do you want to do a service scan?" />
 			<condition>
 from Components.NimManager import nimmanager
 self.condition = nimmanager.somethingConnected() and not config.misc.installwizard.channellistdownloaded.value
 			</condition>
-			<code>
-self.hideRc()
-			</code>	
 			<list>
 				<listentry caption="No, scan later manually" step="end" />
 				<listentry caption="Yes, do an automatic scan now" step="scan" />
@@ -230,7 +222,7 @@ self.hideRc()
 			<condition>
 from Components.NimManager import nimmanager
 self.condition = nimmanager.somethingConnected() and not config.misc.installwizard.channellistdownloaded.value
-			</condition>
+			</condition>			
 			<text value="What do you want to scan?" />
 			<config screen="ScanSimple" module="ScanSetup" type="ConfigList" />
 		</step>
@@ -253,9 +245,7 @@ self.condition = nimmanager.somethingConnected() and not config.misc.installwiza
 				<listentry caption="Yes, do another manual scan now" step="manualscan" />
 			</list>
 		</step>
-
 <!--
-
 		<step id="finisheddefaultsatlists">
 			<text value="Do you want to enable the parental control feature on your %s %s?" />
 			<list>
@@ -263,11 +253,11 @@ self.condition = nimmanager.somethingConnected() and not config.misc.installwiza
 				<listentry caption="Yes" step="parentalsetup" />
 			</list>
 			<code pos="after">
-if self["list"].index == 1:
-	config.ParentalControl.servicepinactive.value = True
+if self["list"].index == 0:
+	config.ParentalControl.configured.setValue(True)
 else:
-	config.ParentalControl.servicepinactive.value = False
-config.ParentalControl.servicepinactive.save()
+	config.ParentalControl.configured.setValue(False)
+config.ParentalControl.configured.save()
 			</code>
 		</step>
 		<step id="parentalsetup">
@@ -277,9 +267,9 @@ config.ParentalControl.servicepinactive.save()
 				<listentry caption="No" step="warnpin" />
 			</list>
 			<code pos="after">
-from ParentalControlSetup import ParentalControlSetup
+from ParentalControlSetup import ParentalControlChangePin
 if self["list"].index == 0:
-	self.session.open(ParentalControlSetup, config.ParentalControl.servicepin[0], _("parental control pin"))
+	self.session.open(ParentalControlChangePin, config.ParentalControl.servicepin[0], _("parental control pin"))
 			</code>
 		</step>
 		<step id="warnpin">
@@ -287,15 +277,19 @@ if self["list"].index == 0:
 		</step>
 		<step id="finishparentalsetup">
 			<code>
-config.ParentalControl.servicepinactive.value = True
+if config.ParentalControl.setuppin.value == "aaaa":
+	config.ParentalControl.setuppinactive.setValue(False)
+else:
+	config.ParentalControl.setuppinactive.setValue(True)
+config.ParentalControl.setuppinactive.save()
+config.ParentalControl.servicepinactive.setValue(True)
 config.ParentalControl.servicepinactive.save()
+config.ParentalControl.setuppin.setValue(config.ParentalControl.servicepin[0].value)
+config.ParentalControl.setuppin.save()
 			</code>
 			<text value="After the start wizard is completed, you need to protect single services. Refer to your %s %s's manual on how to do that." />
 		</step>
-
- -->
-
-
+-->
 		<step id="end" laststep="true">
 			<condition>
 self.condition = self.isLastWizard
