@@ -183,7 +183,7 @@ self.selectKey("LEFT")
 self.selectKey("RIGHT")
 			</code>
 		</step>
-		<step id="nimk">
+<!--		<step id="nimk">
 			<condition>
 from Components.NimManager import nimmanager
 self.condition = len(nimmanager.nim_slots) > 10 and not nimmanager.nim_slots[10].empty and not nimmanager.nim_slots[10].isFBCLink()
@@ -210,7 +210,7 @@ self.selectKey("LEFT")
 self.selectKey("RIGHT")
 			</code>
 		</step>
-
+ -->
 		<step id="scanquestion">
 			<text value="Do you want to do a service scan?" />
 			<condition>

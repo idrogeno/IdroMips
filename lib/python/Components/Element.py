@@ -17,11 +17,11 @@ def cached(f):
 	return wrapper
 
 class ElementError(Exception):
-	def __init__(self, message):
-		self.msg = message
+    def __init__(self, message):
+        self.msg = message
 
-	def __str__(self):
-		return self.msg
+    def __str__(self):
+        return self.msg
 
 class Element(object):
 	CHANGED_DEFAULT = 0   # initial "pull" state
@@ -101,7 +101,8 @@ class Element(object):
 	suspended = property(lambda self: self.__suspended, setSuspend)
 
 	def checkSuspend(self):
-		self.suspended = reduce(lambda x, y: x and y.__suspended, self.downstream_elements, True)
+		if self.downstream_elements:
+			self.suspended = reduce(lambda x, y: x and y.__suspended, self.downstream_elements, True)
 
 	def doSuspend(self, suspend):
 		pass
