@@ -2,123 +2,57 @@ from Source import Source
 from Components.Element import cached
 from Components.Harddisk import harddiskmanager
 from Components.config import config
-from enigma import eTimer
+from enigma import eTimer, eConsoleAppContainer
 
 class HddState(Source):
-	ALL = 0
-	INTERNAL = 1
-	INTERNAL_HDD = 2
-	INTERNAL_SSD = 3
-	EXTERNAL = 4
-
-	def __init__(self, session, poll=600, type=0, diskName=True, allVisible=False):
+	def __init__(self, session, poll=60):
 		Source.__init__(self)
-		self.session = session
-		if type == 1:
-			self.type = self.INTERNAL
-		elif type == 2:
-			self.type = self.INTERNAL_HDD
-		elif type == 3:
-			self.type = self.INTERNAL_SSD
-		elif type == 4:
-			self.type = self.EXTERNAL
-		else:
-			self.type = self.ALL
 		self.isSleeping = False
-		self.state_text = ""
-		self.isHDD()
-		self.diskName = diskName
-		self.allVisible = allVisible
+		self.session = session
 		self.standby_time = poll
 		self.timer = eTimer()
-		self.timer.callback.append(self.updateHddState)
 		self.idle_time = int(config.usage.hdd_standby.value)
 		config.usage.hdd_standby.addNotifier(self.setStandbyTime, initial_call=False)
-		if self.hdd_list:
-			self.updateHddState(force=True)
-		if self.onPartitionAddRemove not in harddiskmanager.on_partition_list_change:
-			harddiskmanager.on_partition_list_change.append(self.onPartitionAddRemove)
-
-	def onPartitionAddRemove(self, state, part):
-		self.timer.stop()
-		self.isHDD()
-		self.updateHddState(force=True)
-
-	def updateHddState(self, force=False):
-		prev_state = self.isSleeping
-		string = ""
-		state = False
-		if self.hdd_list:
-			for hdd in self.hdd_list:
-				if string and self.diskName:
-					string += " "
-				if (hdd[1].max_idle_time or force) and not hdd[1].isSleeping():
- 					state = True
-				if self.diskName:
-					color = state and "\c0000??00" or "\c00????00"
-					string += color
-					name = "I"
-					if not hdd[1].internal:
-						name = "E"
-					elif not hdd[1].rotational:
-						name = "S"
-					string += name
-			if not state:
-				if self.allVisible:
-					if not string:
-						string = "\c0000??00"
-						string += "standby" 
-				self.isSleeping = False
-				idle = self.standby_time
-			else:
-				if not string:
-					string = "\c0000??00"
-					string += "active"
-				self.isSleeping = True
-				idle = self.idle_time
+		self.timer.callback.append(self.runIdle)
+		self.hdd = self.isInternalHDD()
+		self.container = eConsoleAppContainer()
+		if self.hdd:
 			if self.idle_time:
-				timeout = len(self.hdd_list) > 1 and self.standby_time or idle
-				self.timer.start(timeout * 100, True) 
-		else:
+				self.runIdle()
+			else:
+				self.isSleeping = True
+
+	def runIdle(self):
+		if self.hdd and self.idle_time:
+			cmd = "hdparm -C %s" % self.hdd[1].disk_path
+			self.container.dataAvail.append(self.setHddState)
+			self.container.execute(cmd)
+
+	def setHddState(self, str):
+		self.container.dataAvail.remove(self.setHddState)
+		prev_state = self.isSleeping
+		if 'standby' in str:
 			self.isSleeping = False
-		if string:
-			string = "Disk state: " + string
-		self.state_text = string
-		if prev_state != self.isSleeping or force:
+			idle = self.standby_time
+		else:
+			self.isSleeping = True
+			idle = self.idle_time
+		if prev_state != self.isSleeping:
 			self.changed((self.CHANGED_ALL,))
+		self.timer.startLongTimer(idle)
 
 	def setStandbyTime(self, cfgElem):
 		self.timer.stop()
 		self.idle_time = int(cfgElem.value)
-		self.updateHddState(force=True)
+		if self.idle_time and self.hdd:
+			self.timer.startLongTimer(self.standby_time)
 
-	def isHDD(self):
-		self.hdd_list = []
+	def isInternalHDD(self):
 		if harddiskmanager.HDDCount():
 			for hdd in harddiskmanager.HDDList():
-				if hdd[1].idle_running and not hdd[1].card:
-					if self.type == self.ALL:
-						self.hdd_list.append(hdd)
-					elif self.type == self.INTERNAL:
-						if hdd[1].internal:
-							self.hdd_list.append(hdd)
-					elif self.type == self.INTERNAL_HDD:
-						if hdd[1].internal and hdd[1].rotational:
-							self.hdd_list.append(hdd)
-					elif self.type == self.INTERNAL_SSD:
-						if hdd[1].internal and not hdd[1].rotational:
-							self.hdd_list.append(hdd)
-					elif self.type == self.EXTERNAL:
-						if not hdd[1].internal:
-							self.hdd_list.append(hdd)
-
-	def doSuspend(self, suspended):
-		pass
-
-	@cached
-	def getText(self):
-		return self.state_text
-	text = property(getText)
+				if "pci" in hdd[1].phys_path or "ahci" in hdd[1].phys_path:
+					return hdd
+		return None
 
 	@cached
 	def getBoolean(self):
